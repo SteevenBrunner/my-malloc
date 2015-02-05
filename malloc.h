@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Tue Feb  3 14:40:50 2015 Steeven Brunner
-** Last update Tue Feb  3 15:04:02 2015 Steeven Brunner
+** Last update Wed Feb  4 11:22:07 2015 Steeven Brunner
 */
 
 typedef	struct	block
@@ -14,3 +14,5 @@ typedef	struct	block
   int		free;
   t_block	next;
 }		t_block;
+
+#define BLOCK_SIZE sizeof(struct s_block)
