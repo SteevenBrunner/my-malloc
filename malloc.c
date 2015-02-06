@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Fri Feb  6 16:24:44 2015 Steeven Brunner
+** Last update Fri Feb  6 17:41:45 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -22,6 +22,7 @@ void		*malloc(size_t size)
 {
   t_block	*block;
 
+  //checker si un espace est free pour remalloc dedans
   block = sbrk(0);
   printf("\n*********************\n\n");
   printf("Je suis malloc\n");
@@ -31,22 +32,24 @@ void		*malloc(size_t size)
       printf("[Error] : sbrk failed\n");
       return (NULL);
     }
-  /*printf("BLOCK_SIZE = %d\n", BLOCK_SIZE);
-    printf("new_break = %p\n", sbrk(0));*/
-  // Ok le break est déplacé à la fin de la struct
+  /*
+    printf("BLOCK_SIZE = %d\n", BLOCK_SIZE);
+    printf("new_break = %p\n", sbrk(0));
+  */
   block->size = size;
   block->bool_free = 1;
-  /* printf("\n---------------------\n\n");
-  printf("block->size = %d\n", block->size);
-  printf("block->bool_free = %d\n", block->bool_free);*/
-  // Var initialisées
-  // Déplacer le break de la size demandée
+  /* 
+     printf("\n---------------------\n\n");
+     printf("block->size = %d\n", block->size);
+     printf("block->bool_free = %d\n", block->bool_free);
+  */
   if (sbrk(size) == (void*) - 1)
     {
       printf("[Error] : sbrk failed\n");
       return (NULL);
     }
   block = block->next;
+  printf("return valor = %p\n", sbrk(0) - size);
   return (sbrk(0) - size);
 }
 
@@ -62,7 +65,7 @@ void		*malloc(size_t size)
 }
 */
 
-void	create_tab(int	*tab)
+void	create_tab(int *tab)
 {
   printf("tab[1] = [%d]\n", tab[1]);
 }
@@ -90,12 +93,15 @@ int	main()
   tab4 = malloc(1 * sizeof(int));
   tab4[0] = 8;
 
-  printf("\n-------------\n\n");
-  
-  /*  printf("\n-----1er free-----\n");
+  printf("\n*************\n");
+  //printf("\n-------------\n\n");
+
+  /*  
+  printf("\n-----1er free-----\n");
   free(tab);
   printf("\n-----2ème free-----\n");
-  free(tab2);*/
+  free(tab2);
+  */
 
   //create_tab(tab3);
   
