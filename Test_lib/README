@@ -1,0 +1,2 @@
+gcc -c -fPIC -o lib.o lib.c
+cc -o lib.so -fPIC -shared lib.o
