@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Fri Feb  6 11:31:41 2015 Steeven Brunner
+** Last update Fri Feb  6 15:10:30 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -23,15 +23,28 @@ void		*malloc(size_t size)
   t_block	*block;
 
   block = sbrk(0);
-  printf("old_break = %x\n", block);
+  printf("old_break = %p\n", block);
   if (sbrk(BLOCK_SIZE) == (void*) - 1)
     {
       printf("[Error] : sbrk failed\n");
       return (NULL);
     }
-  printf("BLOCK_SIZE = %d\n", BLOCK_SIZE);
-  printf("new_break = %x\n", sbrk(0));
-  return (block);
+  /*printf("BLOCK_SIZE = %d\n", BLOCK_SIZE);
+    printf("new_break = %p\n", sbrk(0));*/
+  // Ok le break est déplacé à la fin de la struct
+  block->size = size;
+  block->bool_free = 1;
+  /* printf("\n---------------------\n\n");
+  printf("block->size = %d\n", block->size);
+  printf("block->bool_free = %d\n", block->bool_free);*/
+  // Var initialisées
+  // Déplacer le break de la size demandée
+  if (sbrk(size) == (void*) - 1)
+    {
+      printf("[Error] : sbrk failed\n");
+      return (NULL);
+    }
+  return (sbrk(0) - size);
 }
 
 /*t_block		find_block(t_block *last, size_t size)
@@ -68,27 +81,30 @@ void	create_tab(int	*tab)
 
 int	main()
 {
-  /*int	*tab2;
-  tab2 = malloc(3 * sizeof(int));
-  tab2[0] = 3;
-  tab2[1] = 4;
-  tab2[2] = 5;
+  int	*tab;
+  printf("sbrk(0) = %p\n", sbrk(0));
+  tab = malloc(3 * sizeof(int));
+  printf("sbrk(0) = %p\n", sbrk(0));
+  tab[0] = 3;
+  tab[1] = 4;
+  tab[2] = 5;
 
   printf("\n-------------\n\n");
   
-  int	*tab3;
+  /* int	*tab3;
   tab3 = malloc(3 * sizeof(int));
   tab3[0] = 6;
   tab3[1] = 7;
   tab3[2] = 8;
 
-  printf("\n-------------\n\n");
+  printf("\n-------------\n\n");*/
   
-  create_tab(tab2);
-  create_tab(tab3);*/
-  printf("First step\n");
-  malloc(7 * sizeof(int));
-  printf("Second step\n");
+  create_tab(tab);
+  //create_tab(tab3);
+  
+  //  t_block	*toto;
+
+  // toto = malloc(7 * sizeof(int));
 }
 
   //brk()
