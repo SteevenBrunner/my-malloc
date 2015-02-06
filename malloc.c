@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Fri Feb  6 15:10:30 2015 Steeven Brunner
+** Last update Fri Feb  6 16:24:44 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -23,6 +23,8 @@ void		*malloc(size_t size)
   t_block	*block;
 
   block = sbrk(0);
+  printf("\n*********************\n\n");
+  printf("Je suis malloc\n");
   printf("old_break = %p\n", block);
   if (sbrk(BLOCK_SIZE) == (void*) - 1)
     {
@@ -44,6 +46,7 @@ void		*malloc(size_t size)
       printf("[Error] : sbrk failed\n");
       return (NULL);
     }
+  block = block->next;
   return (sbrk(0) - size);
 }
 
@@ -57,22 +60,7 @@ void		*malloc(size_t size)
     }
   return (b);
 }
-
-t_block		add_blocks(t_block my_block, size_t size) //extend_heap
-{
-  t_block	new_block;
-
-  new_block = sbrk(0);
-  if(sbrk(size + STRUCT_SIZE) == (void*) - 1)
-    {
-      printf("Error : sbrk() failed\n");
-      return (NULL);
-    }
-  if (my_block)
-    my_block->next = new_block;
-  new_block->free = 0;
-  return (new_block);
-  }*/
+*/
 
 void	create_tab(int	*tab)
 {
@@ -82,24 +70,33 @@ void	create_tab(int	*tab)
 int	main()
 {
   int	*tab;
-  printf("sbrk(0) = %p\n", sbrk(0));
   tab = malloc(3 * sizeof(int));
-  printf("sbrk(0) = %p\n", sbrk(0));
-  tab[0] = 3;
-  tab[1] = 4;
-  tab[2] = 5;
+  tab[0] = 0;
+  tab[1] = 1;
+  tab[2] = 2;
+
+  int	*tab2;
+  tab2 = malloc(4 * sizeof(int));
+  tab2[0] = 3;
+  tab2[1] = 4;
+  tab2[2] = 5;
+  tab2[3] = 6;
+
+  int	*tab3;
+  tab3 = malloc(1 * sizeof(int));
+  tab3[0] = 7;
+
+  int	*tab4;
+  tab4 = malloc(1 * sizeof(int));
+  tab4[0] = 8;
 
   printf("\n-------------\n\n");
   
-  /* int	*tab3;
-  tab3 = malloc(3 * sizeof(int));
-  tab3[0] = 6;
-  tab3[1] = 7;
-  tab3[2] = 8;
+  /*  printf("\n-----1er free-----\n");
+  free(tab);
+  printf("\n-----2ème free-----\n");
+  free(tab2);*/
 
-  printf("\n-------------\n\n");*/
-  
-  create_tab(tab);
   //create_tab(tab3);
   
   //  t_block	*toto;

@@ -5,8 +5,11 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Tue Feb  3 14:40:50 2015 Steeven Brunner
-** Last update Fri Feb  6 12:23:33 2015 Steeven Brunner
+** Last update Fri Feb  6 16:07:40 2015 Steeven Brunner
 */
+
+#ifndef MALLOC_H_
+# define MALLOC_H_
 
 typedef	struct	block
 {
@@ -15,4 +18,9 @@ typedef	struct	block
   struct block	*next;
 }		t_block;
 
+void	*malloc(size_t size);
+void	free(void *ptr);
+
 #define BLOCK_SIZE sizeof(t_block)
+
+#endif /* !MALLOC_H_ */
