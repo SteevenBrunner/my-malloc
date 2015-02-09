@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Fri Feb  6 17:41:45 2015 Steeven Brunner
+** Last update Mon Feb  9 16:28:45 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -18,39 +18,56 @@
 // sbrk(X) pour allouer plus
 // sbrk(0) pour connaitre la limite actuellement alouée (break)
 
+t_block	*g_root = NULL; 
+
 void		*malloc(size_t size)
 {
-  t_block	*block;
-
+  t_block	*tmp;
+  t_block	*buff;
+  
+  if (g_root == NULL)
+    {
+      if ((g_root = sbrk(BLOCK_SIZE)) == (void*) - 1)
+	{
+	  printf("[Error] : sbrk failed\n");
+	  return (NULL);
+	}
+      g_root->size = size;
+      g_root->bool_free = 1;
+      g_root->next = NULL;
+    }  
+  else
+    {
+      if ((tmp = sbrk(BLOCK_SIZE)) == (void*) - 1)
+	{
+	  printf("[Error] : sbrk failed\n");
+	  return (NULL);
+	}
+      buff = g_root;
+      while (buff->next)
+	buff = buff->next;
+      tmp->size = size;
+      tmp->next = NULL;
+      tmp->bool_free = 1;
+      buff->next = tmp;
+    }
   //checker si un espace est free pour remalloc dedans
-  block = sbrk(0);
-  printf("\n*********************\n\n");
-  printf("Je suis malloc\n");
-  printf("old_break = %p\n", block);
-  if (sbrk(BLOCK_SIZE) == (void*) - 1)
+   if (sbrk(size) == (void*) - 1)
     {
       printf("[Error] : sbrk failed\n");
       return (NULL);
     }
-  /*
-    printf("BLOCK_SIZE = %d\n", BLOCK_SIZE);
-    printf("new_break = %p\n", sbrk(0));
-  */
-  block->size = size;
-  block->bool_free = 1;
-  /* 
-     printf("\n---------------------\n\n");
-     printf("block->size = %d\n", block->size);
-     printf("block->bool_free = %d\n", block->bool_free);
-  */
-  if (sbrk(size) == (void*) - 1)
-    {
-      printf("[Error] : sbrk failed\n");
-      return (NULL);
-    }
-  block = block->next;
-  printf("return valor = %p\n", sbrk(0) - size);
-  return (sbrk(0) - size);
+   return (sbrk(0) - size);
+}
+
+void	toto()
+{
+  t_block	*toto;
+  
+  printf("toto 1\n");
+  toto = g_root;
+  printf("toto 2\n");
+  printf("size = %d\n", toto->size);
 }
 
 /*t_block		find_block(t_block *last, size_t size)
@@ -65,35 +82,37 @@ void		*malloc(size_t size)
 }
 */
 
-void	create_tab(int *tab)
-{
-  printf("tab[1] = [%d]\n", tab[1]);
-}
-
 int	main()
 {
   int	*tab;
-  tab = malloc(3 * sizeof(int));
+  tab = malloc(1 * sizeof(int));
   tab[0] = 0;
-  tab[1] = 1;
-  tab[2] = 2;
 
   int	*tab2;
-  tab2 = malloc(4 * sizeof(int));
-  tab2[0] = 3;
-  tab2[1] = 4;
-  tab2[2] = 5;
-  tab2[3] = 6;
+  tab2 = malloc(2 * sizeof(int));
+  tab2[0] = 1;
+  tab2[1] = 2;
 
   int	*tab3;
-  tab3 = malloc(1 * sizeof(int));
-  tab3[0] = 7;
+  tab3 = malloc(3 * sizeof(int));
+  tab3[0] = 3;
+  tab3[1] = 4;
+  tab3[2] = 5;
 
   int	*tab4;
-  tab4 = malloc(1 * sizeof(int));
-  tab4[0] = 8;
+  tab4 = malloc(4 * sizeof(int));
+  tab4[0] = 6;
+  tab4[1] = 7;
+  tab4[2] = 8;
+  tab4[3] = 9;
 
-  printf("\n*************\n");
+  printf("----YOLO----\n");
+  printf("g_root->size = %d\n", g_root->size);
+  printf("g_root->next->size = %d\n", g_root->next->size);
+  printf("g_root->next->next->size = %d\n", g_root->next->next->size);
+  /*  printf("\n---*****---\n");
+  toto();
+  printf("\n*************\n");*/
   //printf("\n-------------\n\n");
 
   /*  
@@ -102,12 +121,6 @@ int	main()
   printf("\n-----2ème free-----\n");
   free(tab2);
   */
-
-  //create_tab(tab3);
-  
-  //  t_block	*toto;
-
-  // toto = malloc(7 * sizeof(int));
 }
 
   //brk()
