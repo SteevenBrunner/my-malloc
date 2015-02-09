@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:43 2015 Steeven Brunner
-** Last update Mon Feb  9 10:15:20 2015 Steeven Brunner
+** Last update Mon Feb  9 18:29:58 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -24,7 +24,7 @@ void		free(void *ptr)
   printf("block = %p\n", block);
   if (ptr == block)
     {
-      block->bool_free = 0;
+      block->bool_free = 1;
       printf("The block is free\n");
     }
   while (ptr != block)

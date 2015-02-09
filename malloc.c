@@ -5,11 +5,11 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Mon Feb  9 16:28:45 2015 Steeven Brunner
+** Last update Mon Feb  9 19:07:37 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
-#include <unistd.h> // brk / sbrk
+#include <unistd.h>
 #include <stdio.h>
 //#include <stdlib.h>		//include malloc / free / realloc
 
@@ -18,7 +18,7 @@
 // sbrk(X) pour allouer plus
 // sbrk(0) pour connaitre la limite actuellement alouée (break)
 
-t_block	*g_root = NULL; 
+t_block	*g_root = NULL;
 
 void		*malloc(size_t size)
 {
@@ -33,7 +33,7 @@ void		*malloc(size_t size)
 	  return (NULL);
 	}
       g_root->size = size;
-      g_root->bool_free = 1;
+      g_root->bool_free = 0;
       g_root->next = NULL;
     }  
   else
@@ -45,19 +45,27 @@ void		*malloc(size_t size)
 	}
       buff = g_root;
       while (buff->next)
-	buff = buff->next;
+	{
+	  if (buff->bool_free == 1 && size <= buff->size)
+	    //checker si un espace est free pour remalloc dedans
+	    {
+	      // à vérifier, pour stop la boucle
+	      buff->next = NULL;
+	    }
+	  else
+	    buff = buff->next;
+	}
       tmp->size = size;
       tmp->next = NULL;
-      tmp->bool_free = 1;
+      tmp->bool_free = 0;
       buff->next = tmp;
     }
-  //checker si un espace est free pour remalloc dedans
-   if (sbrk(size) == (void*) - 1)
+  if (sbrk(size) == (void*) - 1)
     {
       printf("[Error] : sbrk failed\n");
       return (NULL);
     }
-   return (sbrk(0) - size);
+  return (sbrk(0) - size);
 }
 
 void	toto()
@@ -84,15 +92,22 @@ void	toto()
 
 int	main()
 {
+  // si g_root->free = 1, on la considere comme free et par conséquent utilisable.
   int	*tab;
   tab = malloc(1 * sizeof(int));
   tab[0] = 0;
 
   int	*tab2;
-  tab2 = malloc(2 * sizeof(int));
+  tab2 = malloc(6 * sizeof(int));
   tab2[0] = 1;
   tab2[1] = 2;
+  tab2[2] = 33;
+  tab2[3] = 34;
+  tab2[4] = 35;
+  tab2[5] = 36;
 
+  // free()
+  
   int	*tab3;
   tab3 = malloc(3 * sizeof(int));
   tab3[0] = 3;
@@ -122,7 +137,3 @@ int	main()
   free(tab2);
   */
 }
-
-  //brk()
-  //sbrk()
-  //getrlimit() pour checker les limites des ressources systèmes
