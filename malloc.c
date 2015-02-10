@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Mon Feb  9 19:07:37 2015 Steeven Brunner
+** Last update Tue Feb 10 17:45:55 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -93,10 +93,13 @@ void	toto()
 int	main()
 {
   // si g_root->free = 1, on la considere comme free et par conséquent utilisable.
+  printf("\n----YOLO----\n");
+  printf("sbrk(0) = %p\n", sbrk(0));
   int	*tab;
   tab = malloc(1 * sizeof(int));
   tab[0] = 0;
 
+  printf("sbrk(0) = %p\n", sbrk(0));
   int	*tab2;
   tab2 = malloc(6 * sizeof(int));
   tab2[0] = 1;
@@ -106,25 +109,33 @@ int	main()
   tab2[4] = 35;
   tab2[5] = 36;
 
-  // free()
+  free(tab2);
   
+  //return (0);
+  //*****//
+  printf("sbrk(0) = %p\n", sbrk(0));
   int	*tab3;
   tab3 = malloc(3 * sizeof(int));
   tab3[0] = 3;
   tab3[1] = 4;
   tab3[2] = 5;
 
+  printf("sbrk(0) = %p\n", sbrk(0));
   int	*tab4;
   tab4 = malloc(4 * sizeof(int));
   tab4[0] = 6;
   tab4[1] = 7;
   tab4[2] = 8;
   tab4[3] = 9;
+  printf("sbrk(0) = %p\n\n", sbrk(0));
 
   printf("----YOLO----\n");
-  printf("g_root->size = %d\n", g_root->size);
-  printf("g_root->next->size = %d\n", g_root->next->size);
-  printf("g_root->next->next->size = %d\n", g_root->next->next->size);
+  printf("g_root->size = %d, g_root->bool_free = %d\n", g_root->size, g_root->bool_free);
+  printf("g_root->next->size = %d, g_root->next->bool_free = %d\n", g_root->next->size, g_root->next->bool_free);
+  printf("g_root->next->next->size = %d, g_root->next->next->bool_free = %d\n", g_root->next->next->size, g_root->next->next->bool_free);
+
+
+
   /*  printf("\n---*****---\n");
   toto();
   printf("\n*************\n");*/

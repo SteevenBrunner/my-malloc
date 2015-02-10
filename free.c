@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:43 2015 Steeven Brunner
-** Last update Mon Feb  9 18:29:58 2015 Steeven Brunner
+** Last update Tue Feb 10 17:43:39 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -16,25 +16,14 @@
 
 void		free(void *ptr)
 {
-  t_block	*block;
+  t_block	*tmp;
+  int		i = 0;
+
+  tmp = g_root;
+  printf("\n**********START FREE************\n\n");
+ 
+  tmp = ptr - BLOCK_SIZE;
+  tmp->bool_free = 1;
   
-  printf("\n********************\n\n");
-  printf("Je suis free\n");
-  printf("ptr =   %p\n", ptr);
-  printf("block = %p\n", block);
-  if (ptr == block)
-    {
-      block->bool_free = 1;
-      printf("The block is free\n");
-    }
-  while (ptr != block)
-    {
-      printf("block = %p\n", block);
-      if (ptr == block)
-	{
-	  printf("FIND ? Oh yeah\n");
-	}
-      block = block->next;
-    }
-  printf("\n*********************\n\n");
+  printf("\n********END FREE**********\n\n");
 }
