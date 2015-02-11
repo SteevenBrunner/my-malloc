@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Wed Feb 11 17:19:46 2015 Steeven Brunner
+** Last update Wed Feb 11 17:34:29 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -109,8 +109,17 @@ int	main()
   tab4[3] = 9;
   
   printf("                      ----Final list----\n\n");
+  
+  t_block	*buff;
+  
+  while (buff)
+    {
+      printf("size = %d, bool_free = %d\n", buff->size, buff->bool_free);
+    }
+  /*
   printf("size = %d, bool_free = %d\n", g_root->size, g_root->bool_free);
   printf("size = %d, bool_free = %d\n", g_root->next->size, g_root->next->bool_free);
-  printf("size = %d, bool_free = %d\n", g_root->next->next->size, g_root->next->next->bool_free);
+  printf("size = %d, bool_free = %d\n", g_root->next->next->size, g_root->next->next->bool_free);*/
+
   //printf("size = %d, bool_free = %d\n\n", g_root->next->next->next->size, g_root->next->next->next->bool_free);
 }
