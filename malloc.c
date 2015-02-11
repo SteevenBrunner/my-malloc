@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Wed Feb 11 17:34:29 2015 Steeven Brunner
+** Last update Wed Feb 11 17:42:18 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -68,6 +68,7 @@ void		*malloc(size_t size)
 	  return (sbrk(0) - size);
 	}
     }
+  return (sbrk(0) - size);	  
 }
 
 int	main()
@@ -77,6 +78,17 @@ int	main()
   int	*tab;
   tab = malloc(1 * sizeof(int));
   tab[0] = 0;
+
+  printf("                      ----Final list----\n\n");
+  
+  t_block	*buff2;
+  
+  buff2 = g_root;
+  while (buff2)
+    {
+      printf("size = %d, bool_free = %d\n", buff2->size, buff2->bool_free);
+      buff2 = buff2->next;
+    }
 
   printf("\n---------Malloc tab2---------\n");
   int	*tab2;
@@ -112,9 +124,11 @@ int	main()
   
   t_block	*buff;
   
+  buff = g_root;
   while (buff)
     {
       printf("size = %d, bool_free = %d\n", buff->size, buff->bool_free);
+      buff = buff->next;
     }
   /*
   printf("size = %d, bool_free = %d\n", g_root->size, g_root->bool_free);
