@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:43 2015 Steeven Brunner
-** Last update Tue Feb 10 17:43:39 2015 Steeven Brunner
+** Last update Wed Feb 11 15:39:49 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -17,13 +17,9 @@
 void		free(void *ptr)
 {
   t_block	*tmp;
-  int		i = 0;
 
   tmp = g_root;
-  printf("\n**********START FREE************\n\n");
- 
   tmp = ptr - BLOCK_SIZE;
+  printf("tmp->size = %d\n", tmp->size);
   tmp->bool_free = 1;
-  
-  printf("\n********END FREE**********\n\n");
 }
