@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Wed Feb 11 16:51:28 2015 Steeven Brunner
+** Last update Wed Feb 11 17:12:10 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -47,7 +47,7 @@ void		*malloc(size_t size)
 	  printf("buff->size = %d\n", buff->size);	  
 	  printf("BAD Valeur retour = %p\n", buff);
 	  printf("Valeur retour = %p\n", buff + BLOCK_SIZE);
-	  return (buff + BLOCK_SIZE);
+	  return ((char *)buff + BLOCK_SIZE);
 	  //return ();
 	}
       /*else if ((tmp = sbrk(BLOCK_SIZE)) == (void*) - 1)
