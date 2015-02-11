@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Wed Feb 11 17:12:10 2015 Steeven Brunner
+** Last update Wed Feb 11 17:19:46 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -44,9 +44,6 @@ void		*malloc(size_t size)
 	  printf("size = %d\n", size);
 	  buff->size = size;
 	  buff->bool_free = 0;
-	  printf("buff->size = %d\n", buff->size);	  
-	  printf("BAD Valeur retour = %p\n", buff);
-	  printf("Valeur retour = %p\n", buff + BLOCK_SIZE);
 	  return ((char *)buff + BLOCK_SIZE);
 	  //return ();
 	}
@@ -63,14 +60,14 @@ void		*malloc(size_t size)
 	  tmp->bool_free = 0;
 	  tmp->next = NULL;
 	  buff->next = tmp;
+	  if (sbrk(size) == (void*) - 1)
+	    {
+	      printf("[Error] : sbrk failed\n");
+	      return (NULL);
+	    }
+	  return (sbrk(0) - size);
 	}
     }
-  if (sbrk(size) == (void*) - 1)
-    {
-      printf("[Error] : sbrk failed\n");
-      return (NULL);
-    }
-  return (sbrk(0) - size);
 }
 
 int	main()
@@ -97,12 +94,9 @@ int	main()
   printf("\n---------Malloc tab3---------\n");
   int	*tab3;
   tab3 = malloc(3 * sizeof(int));
-  printf("1--After malloc3\n");
   tab3[0] = 94;
-  printf("2--After malloc3\n");
   tab3[1] = 95;
   tab3[2] = 96;
-  printf("3--After malloc3\n");  
   
   //return (0);
 
@@ -118,19 +112,5 @@ int	main()
   printf("size = %d, bool_free = %d\n", g_root->size, g_root->bool_free);
   printf("size = %d, bool_free = %d\n", g_root->next->size, g_root->next->bool_free);
   printf("size = %d, bool_free = %d\n", g_root->next->next->size, g_root->next->next->bool_free);
- printf("size = %d, bool_free = %d\n\n", g_root->next->next->next->size, g_root->next->next->next->bool_free);
-
- printf("TOTO\n");
-
-  /*  printf("\n---*****---\n");
-  toto();
-  printf("\n*************\n");*/
-  //printf("\n-------------\n\n");
-
-  /*  
-  printf("\n-----1er free-----\n");
-  free(tab);
-  printf("\n-----2ème free-----\n");
-  free(tab2);
-  */
+  //printf("size = %d, bool_free = %d\n\n", g_root->next->next->next->size, g_root->next->next->next->bool_free);
 }

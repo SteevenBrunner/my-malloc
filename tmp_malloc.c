@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Wed Feb 11 15:50:59 2015 Steeven Brunner
+** Last update Wed Feb 11 17:15:09 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
@@ -41,8 +41,11 @@ void		*malloc(size_t size)
       if (buff->bool_free == 1 && size <= buff->size)
 	{
 	  printf("Utilisation d'un maillon free\n");
+	  printf("size = %d\n", size);
 	  buff->size = size;
 	  buff->bool_free = 0;
+	  return ((char *)buff + BLOCK_SIZE);
+	  //return ();
 	}
       /*else if ((tmp = sbrk(BLOCK_SIZE)) == (void*) - 1)
 	{
@@ -54,8 +57,8 @@ void		*malloc(size_t size)
 	  tmp = sbrk(BLOCK_SIZE);
 	  printf("size = %d\n", size);
 	  tmp->size = size;
-	  tmp->next = NULL;
 	  tmp->bool_free = 0;
+	  tmp->next = NULL;
 	  buff->next = tmp;
 	}
     }
@@ -66,28 +69,6 @@ void		*malloc(size_t size)
     }
   return (sbrk(0) - size);
 }
-
-void	toto()
-{
-  t_block	*toto;
-  
-  printf("toto 1\n");
-  toto = g_root;
-  printf("toto 2\n");
-  printf("size = %d\n", toto->size);
-}
-
-/*t_block		find_block(t_block *last, size_t size)
-{
-  t_block	b = base;
-  while (b && !(b->free && b->size >= size)) 
-    {
-      *last = b;
-      b = b->next;
-    }
-  return (b);
-}
-*/
 
 int	main()
 {
@@ -113,9 +94,12 @@ int	main()
   printf("\n---------Malloc tab3---------\n");
   int	*tab3;
   tab3 = malloc(3 * sizeof(int));
-  tab3[0] = 3;
-  tab3[1] = 4;
-  tab3[2] = 5;
+  printf("1--After malloc3\n");
+  tab3[0] = 94;
+  printf("2--After malloc3\n");
+  tab3[1] = 95;
+  tab3[2] = 96;
+  printf("3--After malloc3\n");  
   
   //return (0);
 
