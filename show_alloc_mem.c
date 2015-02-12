@@ -5,19 +5,22 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:07:17 2015 Steeven Brunner
-** Last update Tue Feb  3 15:06:35 2015 Steeven Brunner
+** Last update Thu Feb 12 12:56:27 2015 Steeven Brunner
 */
 
-#include <malloc.h>
+#include <stdio.h>
 
-//
-show_alloc_mem()
-xAE000 - 0xAE03F : 63 octets
-suffit de compter en hexa
-//
+#include "malloc.h"
 
 void	show_alloc_mem()
 {
+  t_block       *buff;
 
-
+  buff = g_root;
+  printf("break : %p\n", sbrk(0));
+  while (buff)
+    {
+      printf("%p - %p : %d octets\n", ((char *)buff + BLOCK_SIZE), ((char *)buff + BLOCK_SIZE + buff->size), buff->size); 
+      buff = buff->next;
+    }
 }

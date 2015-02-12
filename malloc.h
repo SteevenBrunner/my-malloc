@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Tue Feb  3 14:40:50 2015 Steeven Brunner
-** Last update Wed Feb 11 16:39:41 2015 Steeven Brunner
+** Last update Thu Feb 12 12:49:33 2015 Steeven Brunner
 */
 
 #ifndef MALLOC_H_
@@ -19,7 +19,10 @@ typedef	struct	block
 }		t_block;
 
 void	*malloc(size_t size);
+void	*add_block(t_block *tmp, t_block *buff, size_t size);
+void	*set_first_elem(size_t size);
 void	free(void *ptr);
+void	show_alloc_mem();
 
 extern t_block	*g_root;
 
