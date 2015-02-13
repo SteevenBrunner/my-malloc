@@ -5,7 +5,7 @@
 ## Login   <brunne_s@epitech.net>
 ## 
 ## Started on  Mon Feb  2 16:06:06 2015 Steeven Brunner
-## Last update Fri Feb 13 17:54:30 2015 Thomas Decamp
+## Last update Fri Feb 13 18:14:09 2015 Thomas Decamp
 ##
 
 SRC =	malloc.c \
@@ -35,6 +35,6 @@ clean:
 	$(RM) $(OBJ)
 
 fclean:	clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(NAMESY)
 
 re:	fclean all
