@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Thu Feb 12 12:55:37 2015 Steeven Brunner
+** Last update Fri Feb 13 18:32:34 2015 Thomas Decamp
 */
 
 #include <sys/types.h>
@@ -82,7 +82,7 @@ void	*add_block(t_block *tmp, t_block *buff, size_t size)
     }
   return (sbrk(0) - size);
 }
-
+/*
 int	main()
 {
   // si g_root->free = 1, on la considère comme free et par conséquent utilisable.
@@ -123,3 +123,4 @@ int	main()
   printf("\n              ----Final list----\n\n");
   show_alloc_mem();
 }
+*/
