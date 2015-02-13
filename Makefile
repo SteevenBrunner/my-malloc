@@ -5,23 +5,31 @@
 ## Login   <brunne_s@epitech.net>
 ## 
 ## Started on  Mon Feb  2 16:06:06 2015 Steeven Brunner
-## Last update Mon Feb  2 16:08:37 2015 Steeven Brunner
+## Last update Fri Feb 13 17:54:30 2015 Thomas Decamp
 ##
 
-SRC = my_malloc.c
+SRC =	malloc.c \
+	free.c \
+	calloc.c \
+	realloc.c
 
-NAME = my_malloc
+NAME = libmy_malloc_$(HOSTTYPE).so
 
-CC = gcc my_malloc.c
+NAMESY = libmy_malloc.so
 
-OBJ = $(SRC:.c=.o)
+CC = cc
+
+CFLAGS += -fPIC
+
+OBJ = malloc.o
 
 RM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) -o $(NAME) $(OBJ)
+	$(CC) -o $(NAME) -fPIC -shared $(OBJ)
+	ln -s $(NAME) $(NAMESY)
 
 clean:
 	$(RM) $(OBJ)
