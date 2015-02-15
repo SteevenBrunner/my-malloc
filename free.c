@@ -5,14 +5,14 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:43 2015 Steeven Brunner
-** Last update Sun Feb 15 21:07:23 2015 Steeven Brunner
+** Last update Sun Feb 15 21:21:47 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
 
-#include "my_malloc.h"
+#include "malloc.h"
 
 void		free(void *ptr)
 {
