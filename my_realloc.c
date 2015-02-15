@@ -5,7 +5,7 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:04:06 2015 Steeven Brunner
-** Last update Wed Feb 11 15:49:31 2015 Thomas Decamp
+** Last update Sun Feb 15 21:00:49 2015 Steeven Brunner
 */
 
 #include <stdlib.h>
@@ -15,7 +15,7 @@ void	*realloc(void *ptr, size_t size)
 {
   void	*copy;
 
-  if (copy = malloc(size * sizeof(ptr)) == NULL)
+  if ((copy = malloc(size * sizeof(ptr))) == NULL)
     {
       return (NULL);
     }

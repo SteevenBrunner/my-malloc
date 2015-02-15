@@ -5,15 +5,14 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:03:00 2015 Steeven Brunner
-** Last update Thu Feb 12 12:37:05 2015 Steeven Brunner
+** Last update Sun Feb 15 21:11:51 2015 Steeven Brunner
 */
 
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
-//#include <stdlib.h>		//include malloc / free / realloc
 
-#include "malloc.h"
+#include "my_malloc.h"
 
 t_block	*g_root = NULL;
 
@@ -21,7 +20,7 @@ void		*malloc(size_t size)
 {
   t_block	*tmp;
   t_block	*buff;
-  
+
   if (g_root == NULL)
     {
       if (set_first_elem(size) == NULL)
@@ -33,14 +32,14 @@ void		*malloc(size_t size)
       while (buff->next || (buff->next && buff->bool_free == 1 &&
 			    size <= buff->size))
 	buff = buff->next;
+      printf("buff->bool_free = %d\n", buff->bool_free);
+      printf("size %d <= buff->size %d\n", size, buff->size);
       if (buff->bool_free == 1 && size <= buff->size)
 	{
-	  /*if (buff->size > size + BLOCK_SIZE)
-	    {
-	      //gerer les free opti
-	      }*/
+	  //call split_free_block()
 	  buff->size = size;
 	  buff->bool_free = 0;
+	  printf("(char *)buff + BLOCK_SIZE = %p\n", (char *)buff + BLOCK_SIZE);
 	  return ((char *)buff + BLOCK_SIZE);
 	}
       else
@@ -48,12 +47,34 @@ void		*malloc(size_t size)
 	  return NULL;
       //retour de add_block à gérer
     }
+  printf("(sbrk(0) - size) = %p\n", (sbrk(0) - size));
   return (sbrk(0) - size);
 }
+/*
+void	*split_free_block(t_block *tmp, t_block *buff, size_t size)
+{
+  printf("buff->size = %d\n", buff->size);
+  printf("buff->size = %d\n", buff->size);
+  if (buff->size > size + BLOCK_SIZE)
+    {
+      /*if ((tmp = sbrk(BLOCK_SIZE)) == (void*) - 1)
+	{
+	  printf("[Error] : sbrk failed\n");
+	  return (NULL);
+	  }
+      printf("Split free block\n");
+      tmp->size = size;
+      tmp->bool_free = 0;
+      tmp->next = NULL;
+      buff->next = tmp;
+    }
+  return NULL;
+}
+*/
 
 void	*set_first_elem(size_t size)
 {
-  if ((g_root = sbrk(BLOCK_SIZE)) == (void*) - 1)
+  if ((g_root = sbrk(BLOCK_SIZE + size)) == (void*) - 1)
     {
       printf("[Error] : sbrk failed\n");
       return (NULL);
@@ -65,7 +86,7 @@ void	*set_first_elem(size_t size)
 
 void	*add_block(t_block *tmp, t_block *buff, size_t size)
 {
-  if ((tmp = sbrk(BLOCK_SIZE)) == (void*) - 1)
+  if ((tmp = sbrk(BLOCK_SIZE + size)) == (void*) - 1)
     {
       printf("[Error] : sbrk failed\n");
       return (NULL);
@@ -74,11 +95,6 @@ void	*add_block(t_block *tmp, t_block *buff, size_t size)
   tmp->bool_free = 0;
   tmp->next = NULL;
   buff->next = tmp;
-  if (sbrk(size) == (void*) - 1)
-    {
-      printf("[Error] : sbrk failed\n");
-      return (NULL);
-    }
   return (sbrk(0) - size);
 }
 
@@ -90,19 +106,32 @@ int	main()
   tab = malloc(1 * sizeof(int));
   tab[0] = 0;
 
-  printf("\n---------Malloc tab2---------\n\n");
-  int	*tab2;
-  tab2 = malloc(6 * sizeof(int));
-  tab2[0] = 1;
-  tab2[1] = 2;
-  tab2[2] = 33;
-  tab2[3] = 34;
-  tab2[4] = 35;
-  tab2[5] = 36;
+  printf("sbrk(0) tab = %p\n", sbrk(0));
 
-  printf("\n---------Free tab2---------\n\n");
-  free(tab2);
-  
+  printf("\n---------Malloc tab2 = size = 16 * 4 = 64---------\n\n");
+  int	*tab2;
+  tab2 = malloc(16 * sizeof(int));
+  tab2[0] = 0;
+  tab2[1] = 1;
+  tab2[2] = 2;
+  tab2[3] = 3;
+  tab2[4] = 4;
+  tab2[5] = 5;
+  tab2[6] = 6;
+  tab2[7] = 7;
+  tab2[8] = 8;
+  tab2[9] = 9;
+  tab2[10] = 10;
+  tab2[11] = 11;
+  tab2[12] = 12;
+  tab2[13] = 13;
+  tab2[14] = 14;
+  tab2[15] = 15;
+
+  printf("sbrk(0) tab2 = %p\n", sbrk(0));
+
+  //free(tab2);
+
   printf("\n---------Malloc tab3---------\n\n");
   int	*tab3;
   tab3 = malloc(3 * sizeof(int));
@@ -110,6 +139,11 @@ int	main()
   tab3[1] = 95;
   tab3[2] = 96;
   
+  printf("sbrk(0) tab3 = %p\n", sbrk(0));
+
+  printf("\n---------Free tab2---------\n\n");
+  //printf("tab = %p\n", tab);
+  free(tab2);
 
   printf("\n---------Malloc tab4---------\n\n");
   int	*tab4;
@@ -118,16 +152,23 @@ int	main()
   tab4[1] = 7;
   tab4[2] = 8;
   tab4[3] = 9;
-  
-  printf("\n              ----Final list----\n\n");
-  
+
   t_block	*buff;
-  
+
   buff = g_root;
-  while (buff)
+
+  while (buff != NULL)
     {
-      printf("size = %d, bool_free = %d\n", buff->size, buff->bool_free);
+      printf("size = %d   ---   ", buff->size);
+      printf("bool_free = %d\n", buff->bool_free);
       buff = buff->next;
     }
-  printf("\n");
+    printf("END OF PRINT\n");
+
+  printf("sbrk(0) tab4 = %p\n", sbrk(0));
+
+  //free(tab4);
+
+  printf("\n              ----Show_alloc_mem()----\n\n");
+  //  show_alloc_mem();
 }

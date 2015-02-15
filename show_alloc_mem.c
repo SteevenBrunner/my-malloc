@@ -5,12 +5,12 @@
 ** Login   <brunne_s@epitech.net>
 ** 
 ** Started on  Mon Feb  2 17:07:17 2015 Steeven Brunner
-** Last update Thu Feb 12 14:43:40 2015 Steeven Brunner
+** Last update Sun Feb 15 21:07:40 2015 Steeven Brunner
 */
 
 #include <stdio.h>
 
-#include "malloc.h"
+#include "my_malloc.h"
 
 void	show_alloc_mem()
 {
